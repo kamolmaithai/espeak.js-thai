@@ -14,7 +14,7 @@ var allowedIPpatterns = /[-a-zA-Z]+|\d[\d,\.]*|[ \t]+|\r?\n/g
 var allowedRegexp = new RegExp(allowedIPpatterns);
 var ascii = text.match(allowedRegexp);
 
-//var ascii = mmcut(text);
+var ascii = mmcut(text);
 document.getElementById('output').value = JSON.stringify(ascii);
 }
 </script>
