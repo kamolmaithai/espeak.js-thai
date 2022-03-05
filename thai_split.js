@@ -1,8 +1,7 @@
 var wordlist, li, pat_eng, pat_tcc;
 
 var client = new XMLHttpRequest();
-	//client.open('GET', 'js/thaiword.txt');
-	client.open('GET', 'js/dict.txt');
+	client.open('GET', 'dict.txt');
 	client.onreadystatechange = function() {
 	  wordlist = client.responseText.split('\n');
 }
