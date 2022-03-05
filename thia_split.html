@@ -1,0 +1,21 @@
+<html>
+<body>
+
+<textarea id="input" rows = "10" cols="120"></textarea><br>
+<button onclick="trans();">Split</button><br>
+<textarea id="output" rows = "10" cols="120"></textarea>
+
+</body>
+<script>
+function trans(){
+var text = document.getElementById('input').value;
+var allowedIPpatterns = /[-a-zA-Z]+|\d[\d,\.]*|[ \t]+|\r?\n/g
+
+var allowedRegexp = new RegExp(allowedIPpatterns);
+var ascii = text.match(allowedRegexp);
+
+//var ascii = mmcut(text);
+document.getElementById('output').value = JSON.stringify(ascii);
+}
+</script>
+</html>
