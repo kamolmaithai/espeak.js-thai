@@ -1,0 +1,151 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script>
+    // This demo is licensed under the GNU GPL.
+  </script>
+  <script src='thaisplit.js'> </script>
+  <script src="js/speak_client.js"></script>
+</head>
+
+
+<body>
+
+<textarea id="input" rows = "10" cols="120"></textarea><br>
+<button onclick="trans();">Split</button><br>
+<textarea id="output" rows = "10" cols="120"></textarea>
+  <form onsubmit="submitForm(text.value, { amplitude: amplitude.value, wordgap: workdgap.value, pitch: pitch.value, speed: speed.value, voice: voice.value },); return false">
+    Text: <input id="texttospeak" type="text" name="text" size=50 value="" style="display:none;">
+    Amplitude: <input type="text" name="amplitude" size=5 value="100">
+    Pitch: <input type="text" name="pitch" size=5 value="50">
+    Speed: <input type="text" name="speed" size=5 value="175">
+    Word gap: <input type="text" name="workdgap" size=5 value="0">
+    Voice: <select id="voicetospeak" name="voice">
+	  <option value="th">ไทย</option>
+      <option value="en/en-us">English (United States)</option>
+      <option value="es">Español</option>
+      <option value="fr">Française</option>
+
+    </select>
+    <input type="submit" value="speak" onclick="setSubmit(this);">
+	<input type="submit" value="download" onclick="setSubmit(this);">
+  </form>
+
+ <div id="audio"></div>
+
+</body>
+<script>
+function split(textarea){
+	var splitout = "";
+				var sel = window.getSelection();
+                // reset selection
+                textarea.focus();
+                textarea.selectionStart = textarea.selectionEnd = 0;
+
+                // instruct the browser to select each word, then read the
+                // selection and output it.
+                var start = 0;
+                while(end !== textarea.value.length) {
+                    sel.modify("move", "forward", "word");
+                    var end = textarea.selectionEnd;
+                    var word = textarea.value.substring(start, end);
+                    splitout += word + "  ";
+                    start = end;
+                }
+	return splitout;
+
+}
+function trans(){
+var text = split(document.getElementById('input'));
+document.getElementById('input').value = text;
+var allowedIPpatterns = /[-a-zA-Z]+|\d[\d,\.]*|[ \t]+|\r?\n/g
+
+var allowedRegexp = new RegExp(allowedIPpatterns);
+var ascii = text.match(allowedRegexp);
+
+var ascii = thaisplit(text);
+alert(text);
+//document.getElementById('output').value = JSON.stringify(ascii);
+document.getElementById('output').value = ascii;
+document.getElementById('texttospeak').value = ascii;
+}
+
+
+    function encode64(data) {
+      var BASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+      var PAD = '=';
+      var ret = '';
+      var leftchar = 0;
+      var leftbits = 0;
+      for (var i = 0; i < data.length; i++) {
+        leftchar = (leftchar << 8) | data[i];
+        leftbits += 8;
+        while (leftbits >= 6) {
+          var curr = (leftchar >> (leftbits-6)) & 0x3f;
+          leftbits -= 6;
+          ret += BASE[curr];
+        }
+      }
+      if (leftbits == 2) {
+        ret += BASE[(leftchar&3) << 4];
+        ret += PAD + PAD;
+      } else if (leftbits == 4) {
+        ret += BASE[(leftchar&0xf) << 2];
+        ret += PAD;
+      }
+      
+      return ret;
+    }
+    function download(filename, content) {
+      if (window.atob && window.navigator && window.navigator.msSaveOrOpenBlob && window.Uint8Array && window.Blob) {
+        var byteCharacters = atob(content);
+        var byteNumbers = new Array(byteCharacters.length);
+        for (var i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        var blob = new Blob([byteArray], {type: 'audio/x-wav'});
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+      } else {
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:audio/x-wav;base64,' + encode64(content));
+          element.setAttribute('download', filename);
+
+          element.style.display = 'none';
+          document.body.appendChild(element);
+
+          element.click();
+
+          document.body.removeChild(element);
+      }
+    }
+	  function playHTMLAudioElement(wav) {
+
+    document.getElementById("audio").innerHTML=("<audio id=\"player\" src=\"data:audio/x-wav;base64,"+encode64(wav)+"\">");
+    document.getElementById("player").play();
+  }
+	
+	
+	function submitForm (text, options)
+	{
+	  if (submitName == "download")
+	  {
+		speak(text, options, function(data, wav) {
+        download('speak.wav', wav);
+		});
+		
+	} else {
+
+		speak(text, options, function(data, wav) {
+		playHTMLAudioElement(wav);
+		});
+	  }
+}
+	
+	var submitName;
+	function setSubmit (button)
+	{
+	  submitName = button.value;
+	}
+</script>
+</html>
