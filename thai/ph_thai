@@ -1,0 +1,310 @@
+// Thai
+//*******************************************************************
+// CONSONANTS
+//*******************************************************************
+phoneme b        // b
+  ipa b
+  import_phoneme base1/b
+endphoneme
+phoneme d        // d
+  ipa d
+  import_phoneme base1/d
+endphoneme
+phoneme f        // f
+  ipa f
+  import_phoneme base1/f
+endphoneme
+phoneme h       // h
+  ipa h
+  import_phoneme base1/h
+endphoneme
+phoneme j       // ipa j
+  ipa j
+  import_phoneme base1/j
+endphoneme
+phoneme k       // k
+  ipa k
+  import_phoneme base1/k
+endphoneme
+phoneme kh
+  ipa kʰ
+  import_phoneme base1/k
+endphoneme
+phoneme l      // l
+  ipa l
+  import_phoneme base1/l
+endphoneme
+phoneme m      // m
+  ipa m
+  import_phoneme base1/m
+endphoneme
+phoneme n      // n
+  ipa n
+  vcd alv nas
+  Vowelout f1=2 f2=1500 -300 250  f3=-100 80  rms=20 brk
+  lengthmod 4
+
+  IF KlattSynth THEN
+    Vowelin f1=0 f2=1500 -200 200 f3=0 80
+    FMT(klatt/n)
+  ENDIF
+
+  NextVowelStarts
+    VowelStart(n/n@)
+    VowelStart(n/na)
+    VowelStart(n/ne)
+    VowelStart(n/ni)
+    VowelStart(n/no)
+    VowelStart(n/nu)
+  EndSwitch
+
+  IF prevPh(isNotVowel) AND nextPhW(isLiquid) THEN
+    FMT(n/nj)
+  ELIF prevPh(isPause) OR prevPh(n) THEN
+    FMT(n/_n)
+  ELIF nextPh(isNotVowel) THEN
+    FMT(n/n_)
+  ENDIF
+endphoneme
+phoneme ŋ      // ŋ
+  ipa ŋ
+  import_phoneme base1/N-
+endphoneme
+phoneme p      // p
+  ipa p
+  import_phoneme base1/p
+endphoneme
+phoneme ph      // ph aspirated
+  ipa pʰ
+  import_phoneme base1/p
+endphoneme
+phoneme r      // r
+  ipa r
+  import_phoneme base1/r
+endphoneme
+phoneme s      // s
+  ipa s
+  import_phoneme base1/s
+endphoneme
+phoneme th      // th
+  ipa tʰ
+  import_phoneme base1/t
+endphoneme
+phoneme ch      // ch
+  ipa tɕ
+  import_phoneme base1/tS;
+endphoneme
+phoneme w      // w
+  ipa w
+  import_phoneme base1/w
+endphoneme
+phoneme ʔ // ipa ʔ
+  ipa ʔ
+  vls glt stp
+endphoneme
+phoneme j  // j
+  ipa j
+  import_phoneme base1/j
+endphoneme
+
+//*******************************************************************
+// VOWELS
+//*******************************************************************
+
+phoneme a      // a
+  import_phoneme base1/a
+endphoneme
+phoneme e      // e
+  import_phoneme base1/e
+endphoneme
+phoneme ɛ     // ae
+  ipa ɛ
+  vwl starttype #e endtype #e
+  length 200
+  FMT(vowel/ee_5)
+endphoneme
+phoneme i      // i
+  import_phoneme base1/i
+endphoneme
+phoneme o       //  o
+  vwl starttype #o endtype #o
+  length 220
+
+  FMT(vowel/o)
+endphoneme
+phoneme ɔ       // ဢ​ေႃ
+  vwl starttype #o endtype #o
+  length 260
+  ipa ɔ
+
+  FMT(vwl_it/o_open)
+endphoneme
+phoneme u      // u
+  import_phoneme base1/u
+endphoneme
+phoneme ɯ // ɯ
+  vwl starttype #a endtype #u
+  length 170
+  ipa ɯ
+  FMT(vowel/8_2)
+endphoneme
+phoneme ɤ
+  vwl starttype #@ endtype #@ lng
+  ipa ɤ
+  length 240
+  ChangeIfUnstressed(@)
+  FMT(vowel/8_7)
+endphoneme
+phoneme a:      // ဢၢ
+  vwl starttype #a endtype #a
+  length 250
+  ipa aː
+
+  FMT(vowel/a)
+endphoneme
+phoneme eː
+  vwl  starttype #@  endtype #i
+  ipa eː
+  length 240
+  FMT(vdiph/@i_3)
+endphoneme
+phoneme ɛː
+  ipa ɛː
+  vwl starttype #e endtype #e
+  length 200
+  FMT(vowel/ee_5)
+endphoneme
+phoneme iː
+  vwl starttype #i endtype #i
+  length 200
+  FMT(vowel/i)
+endphoneme
+phoneme oː
+  vwl starttype #o endtype #o
+  length 200
+  FMT(vowel/oo)
+endphoneme
+phoneme ɔː
+  vwl starttype #o endtype #o
+  length 200
+  FMT(vowel/oo)
+endphoneme
+phoneme uː
+  vwl starttype #u endtype #u
+  length 200
+  FMT(vowel/u)
+endphoneme
+phoneme ɯː
+  vwl starttype #a endtype #u
+  length 200
+  ipa ɯ
+  FMT(vowel/8_2)
+endphoneme
+phoneme ɤː
+  vwl starttype #@ endtype #@ lng
+  ipa ɤ
+  length 240
+  ChangeIfUnstressed(@)
+  FMT(vowel/8_7)
+endphoneme
+//*******************************************************************
+// DIPHTHONGS
+//*******************************************************************
+phoneme ia
+  vwl starttype #i endtype #a
+  ipa ia
+  length 240
+  FMT(vwl_zh/iaa)
+endphoneme
+phoneme ua
+  vwl  starttype #u  endtype #a
+  length 250
+  FMT(vwl_zh/uaa)
+endphoneme
+phoneme ɯa
+  vwl  starttype #a  endtype #a
+  length 250
+  ipa ɯa
+  FMT(vowel/a_5)
+endphoneme
+//*******************************************************************
+// Vowels + syllable-final /j, w/
+//*******************************************************************
+phoneme aj   // ဢႆ
+  vwl starttype #a endtype #i
+  length 200
+  ipa aj
+
+  FMT(vdiph/ai)
+endphoneme
+phoneme aw
+  vwl starttype #a endtype #u
+  length 200
+  ipa aɯ
+
+  FMT(vdiph/aau_4)
+endphoneme
+phoneme ew // ipa ew ## espeak-ng hasn't ew
+  vwl starttype #e endtype #o
+  length 270
+  FMT(vdiph2/eo)
+endphoneme
+//phoneme ɛw      // ɛw // TODO it's not good.
+//  ipa ɛw
+//  vwl starttype #e endtype #o
+//  length 200
+//  FMT(vowel/ee#)
+//endphoneme
+phoneme iw
+  ipa iw
+  vwl starttype #i endtype #o
+  length 250
+  FMT(vdiph2/iioo)
+endphoneme
+phoneme ɔj     // ဢူၺ်
+  ipa ɔj
+  vwl starttype #o endtype #i
+  length 200
+
+  FMT(vdiph/ooi)
+endphoneme
+phoneme uj   //  uj
+  ipa uj
+  vwl starttype #u endtype #i
+  length 200
+
+  FMT(vdiph/ui)
+endphoneme
+phoneme uai
+  vwl starttype #u endtype #i
+  length 250
+  FMT(vwl_zh/uai)
+endphoneme
+//*******************************************************************
+// TONES
+//*******************************************************************
+
+phoneme ˩˦ // rising tone (contour: 24) // ๋
+  ipa ˩˦
+  stress
+  Tone(20, 40, envelope/p_rise, NULL)
+endphoneme
+
+phoneme ˨˩ // low tone (contour: 11) // ่
+  ipa ˨˩
+  stress
+  Tone(10, 10, envelope/i_risefall, NULL)
+endphoneme
+
+phoneme ˦˥ // high tone (contour: 55) // ๊
+  ipa ˦˥
+  stress
+  Tone(50, 50, envelope/i_risefall, NULL)
+endphoneme
+
+phoneme ˥˩ // falling (creaky) tone (contour: 42) // ้
+  ipa ˥˩
+  stress
+  Tone(40, 20, envelope/p_fall, NULL)
+endphoneme
+
